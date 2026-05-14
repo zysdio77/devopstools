@@ -1,0 +1,8 @@
+services:
+  webhook:
+    build: .
+    ports:
+      - "9099:9099"
+    volumes:
+      - ./webhook.yaml:/app/webhook.yaml
+    restart: unless-stopped

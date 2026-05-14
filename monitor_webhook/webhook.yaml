@@ -1,0 +1,25 @@
+smtp:
+  host: smtp.example.com
+  port: 465 
+  user: sender@example.com
+  password: yourpassword
+
+routes:
+  alert:
+    use_ding: true
+    dingtalk: https://oapi.dingtalk.com/robot/send?access_token=xxx
+    use_email: true
+    email:
+      - receiver@example.com
+      - receiver@example.com
+  newschange:
+    use_ding: false
+    dingtalk: https://oapi.dingtalk.com/robot/send?access_token=xxx
+    use_email: true
+    email:
+      - receiver@example.com
+      - receiver@example.com
+      - receiver@example.com
+  high_notice:
+    use_ding: true
+    dingtalk: https://oapi.dingtalk.com/robot/send?access_token=xxx
