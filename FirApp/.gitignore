@@ -1,0 +1,10 @@
+docker/data/
+fir_go/log/
+fir_go/template/dist/
+.idea/
+.vscode/
+*.log
+*.env
+*.pem
+*.key
+.DS_Store

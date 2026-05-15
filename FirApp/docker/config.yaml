@@ -1,0 +1,33 @@
+database:
+  default:
+    type:  "mysql"
+    link:  "root:123456@tcp(mysql:3306)/fir_data?parseTime=true&charset=utf8mb4"
+server:
+  address:          ":80"
+  maxHeaderBytes:    "20KB"
+  clientMaxBodySize: "500MB"
+  serverRoot: "/usr/src/dist"
+  IndexFolder: true
+  authToken: ""
+  logger:
+    path:                  "log/"
+    file:                  "{Y-m-d}.log"
+    prefix:                ""
+    level:                 "all"
+    ctxKeys:               []
+    header:                true
+    stdout:                true
+    rotateSize:            0
+    rotateExpire:          0
+    rotateBackupLimit:     0
+    rotateBackupExpire:    0
+    rotateBackupCompress:  0
+    rotateCheckInterval:   "1h"
+    stdoutColorDisabled:   false
+    writerColorEnable:     false
+  template:   "/usr/src/dist"
+  ipauri:   "https://fir.example.com/ios/"
+  templatename: "template.plist"
+  allowedExtensions:
+    - ".ipa"
+    - ".apk"

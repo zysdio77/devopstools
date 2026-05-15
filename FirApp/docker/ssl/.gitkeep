@@ -1,0 +1,6 @@
+阿里云申请免费 SSL 证书后，下载 Nginx 格式，把两个文件放到这里：
+
+  - fullchain.pem  （证书文件 .pem 或 .crt，直接重命名）
+  - privkey.pem    （私钥文件 .key，重命名为 privkey.pem）
+
+放好后 docker compose up -d 即可。

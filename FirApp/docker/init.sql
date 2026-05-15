@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS fir_data DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+USE fir_data;
+
+CREATE TABLE IF NOT EXISTS fir (
+    name VARCHAR(255) NOT NULL,
+    system_type VARCHAR(255) NOT NULL,
+    note VARCHAR(1000),
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP
+);
