@@ -1,0 +1,25 @@
+name: "example-build"
+
+notify:
+  # dingtalk_url: "https://oapi.dingtalk.com/robot/send?access_token=xxx"
+  # email_smtp: "smtp.example.com"
+  # email_to: "team@example.com"
+
+stages:
+  - name: "build"
+    steps:
+      - name: "compile"
+        cmd: "echo 'compiling...' && sleep 2 && echo 'done'"
+
+      - name: "lint"
+        cmd: "echo 'linting...' && sleep 1 && echo 'done'"
+
+  - name: "test"
+    steps:
+      - name: "unit-test"
+        cmd: "echo 'running tests...' && sleep 3 && echo 'all tests passed'"
+
+  - name: "deploy"
+    steps:
+      - name: "deploy-to-server"
+        cmd: "echo 'deploying...' && sleep 2 && echo 'deployed successfully'"
