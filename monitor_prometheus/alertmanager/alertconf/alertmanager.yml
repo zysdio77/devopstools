@@ -1,0 +1,21 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'smtp.example.com:587'       # 替换为你的 SMTP 服务器
+  smtp_from: 'alertmanager@example.com'         # 替换为发件邮箱
+  smtp_auth_username: 'alertmanager@example.com'
+  smtp_auth_password: 'YOUR_PASSWORD'
+  smtp_require_tls: true
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'dingtalk-and-email'
+
+receivers:
+- name: 'dingtalk-and-email'
+  webhook_configs:
+    - url: 'http://webhook:8060/dingtalk/webhook1/send'
+  email_configs:
+    - to: 'admin@example.com'                   # 替换为接收告警的邮箱

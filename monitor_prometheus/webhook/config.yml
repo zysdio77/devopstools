@@ -1,0 +1,4 @@
+targets:
+  webhook1:
+    url: https://oapi.dingtalk.com/robot/send?access_token=YOUR_ACCESS_TOKEN
+    secret: YOUR_SECRET

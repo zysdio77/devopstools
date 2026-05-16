@@ -1,0 +1,113 @@
+services:
+  prometheus:
+    image: prom/prometheus:v2.47.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus/promconf/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./prometheus/rules:/rules"
+      - "prometheus_data:/prometheus"
+      - "./prometheus/groups:/usr/local/prometheus/groups"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=30d'
+      - '--storage.tsdb.retention.size=100GB'
+    networks:
+      - monitor
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    restart: always
+    depends_on:
+      - alertmanager
+      - blackbox-exporter
+
+  alertmanager:
+    image: prom/alertmanager:v0.26.0
+    # ports:
+    #   - "9093:9093"  # 仅内部使用
+    volumes:
+      - "./alertmanager/alertconf:/etc/alertmanager"
+    command: --config.file=/etc/alertmanager/alertmanager.yml
+    networks:
+      - monitor
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    restart: always
+    depends_on:
+      - webhook
+
+  grafana:
+    image: grafana/grafana:10.2.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./grafana/provisioning:/etc/grafana/provisioning"
+      - "grafana_data:/var/lib/grafana"
+    networks:
+      - monitor
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    restart: always
+    depends_on:
+      - prometheus
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter:v0.24.0
+    # ports:
+    #   - "9115:9115"  # 仅内部使用
+    volumes:
+      - "./blackbox-exporter/blackbox.yml:/config/blackbox.yml"
+    command: --config.file=/config/blackbox.yml
+    networks:
+      - monitor
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    restart: always
+
+  node-exporter:
+    image: prom/node-exporter:v1.7.0
+    ports:
+      - "9100:9100"
+    networks:
+      - monitor
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    restart: always
+
+  webhook:
+    image: timonwong/prometheus-webhook-dingtalk:latest
+    # ports:
+    #   - "9099:8060"  # 仅内部使用
+    volumes:
+      - "./webhook/config.yml:/etc/prometheus-webhook-dingtalk/config.yml"
+    networks:
+      - monitor
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    restart: always
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  monitor:
+    driver: bridge
